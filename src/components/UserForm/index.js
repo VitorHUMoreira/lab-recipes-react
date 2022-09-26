@@ -36,7 +36,7 @@ function UserForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div class="mb-2">
+        <div className="mb-2">
           <label className="form-label" htmlFor="name">
             Nome
           </label>
@@ -51,7 +51,7 @@ function UserForm() {
             onChange={handleChange}
           />
         </div>
-        <div class="mb-4">
+        <div className="mb-4">
           <label className="form-label" htmlFor="email">
             E-mail
           </label>
@@ -66,7 +66,7 @@ function UserForm() {
           />
         </div>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           CRIAR USUÁRIO
         </button>
       </form>

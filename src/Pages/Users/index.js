@@ -36,10 +36,10 @@ function Users() {
 
   return (
     <div className="container-xl main-container bg-secondary border border-dark rounded p-3">
-      <h2>Users</h2>
+      <h2>USUÁRIOS</h2>
       <Link to="/users/create">
-        <button type="button" class="btn btn-primary btn-lg">
-          CREATE USER
+        <button type="button" className="btn btn-primary btn-lg">
+          CRIAR USUÁRIO
         </button>
       </Link>
       <input

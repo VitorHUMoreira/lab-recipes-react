@@ -26,7 +26,7 @@ function Navbar() {
                 className="nav-link text-decooration-none"
                 aria-current="page"
               >
-                Home
+                MENU
               </Link>
             </li>
             <li className="nav-item">
@@ -34,7 +34,7 @@ function Navbar() {
                 to="/users"
                 className="nav-item nav-link text-decooration-none"
               >
-                Users
+                USUÁRIOS
               </Link>
             </li>
             <li className="nav-item">
@@ -42,7 +42,7 @@ function Navbar() {
                 to="/recipes"
                 className="nav-item nav-link text-decooration-none"
               >
-                Recipes
+                RECEITAS
               </Link>
             </li>
           </ul>

@@ -12,7 +12,7 @@ function Error() {
         </p>
         <hr className="bg-dark" />
         <Link to="/">
-          <button type="button" class="btn btn-secondary btn-lg">
+          <button type="button" className="btn btn-secondary btn-lg">
             MENU
           </button>
         </Link>

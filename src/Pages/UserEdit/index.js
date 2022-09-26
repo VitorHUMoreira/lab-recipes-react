@@ -8,22 +8,24 @@ function UserEdit() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [userNameCopy, setUserNameCopy] = useState("");
 
   useEffect(() => {
     setLoading(true);
-    async function fetchConfigs() {
+    async function fetchUser() {
       try {
         const response = await axios.get(
           `http://localhost:4000/users/user/${idUser}`
         );
         setUser(response.data);
+        setUserNameCopy(response.data.name);
         setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
       }
     }
-    fetchConfigs();
+    fetchUser();
   }, [idUser]);
 
   function handleChange(e) {
@@ -35,7 +37,7 @@ function UserEdit() {
 
     try {
       await axios.put(`http://localhost:4000/users/edit/${idUser}`, user);
-      toast.success("Usuário editado com sucesso.");
+      toast.success(`Usuário editado com sucesso.`);
       navigate(`/users/user/${idUser}`);
     } catch (error) {
       console.log(error);
@@ -45,23 +47,31 @@ function UserEdit() {
 
   async function handleDelete() {
     try {
-      await axios.delete(`http://localhost:4000/users/edit/${idUser}`);
+      toast.success((t) => (
+        <span>
+          <b>{user.name}</b> deletado com sucesso.
+        </span>
+      ));
+      await axios.delete(`http://localhost:4000/users/delete/${idUser}`);
       navigate("/users");
-      toast.success("Usuário deletado com sucesso.");
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao deletar usuário.");
+      toast.error((t) => (
+        <span>
+          Erro ao deletar <b>{user.name}</b>.
+        </span>
+      ));
     }
   }
 
   return (
     <div className="container-xl main-container bg-secondary border border-dark rounded p-3">
-      <h2>{user.name}</h2>
+      <h2>{userNameCopy}</h2>
 
       {!loading && (
         <>
           <form onSubmit={handleSubmit}>
-            <div class="mb-2">
+            <div className="mb-2">
               <label className="form-label" htmlFor="name">
                 Nome
               </label>
@@ -75,7 +85,7 @@ function UserEdit() {
                 onChange={handleChange}
               />
             </div>
-            <div class="mb-4">
+            <div className="mb-4">
               <label className="form-label" htmlFor="email">
                 E-mail
               </label>
@@ -89,21 +99,25 @@ function UserEdit() {
                 onChange={handleChange}
               />
             </div>
-            <Link to="/users">
-              <button type="button" class="btn btn-success">
-                SALVAR
-              </button>
-            </Link>
+            <button type="submit" className="btn btn-success">
+              SALVAR
+            </button>
           </form>
         </>
       )}
 
-      <Link
-        to={`/users/edit/${user._id}`}
+      <button
+        type="button"
         className="mt-3 btn btn-danger"
         onClick={handleDelete}
       >
         DELETAR
+      </button>
+
+      <Link to={`/users/user/${user._id}`}>
+        <button type="button" className="mt-3 btn btn-primary">
+          VOLTAR
+        </button>
       </Link>
     </div>
   );

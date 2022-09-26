@@ -10,7 +10,7 @@ function UserProfile() {
 
   useEffect(() => {
     setLoading(true);
-    async function fetchConfigs() {
+    async function fetchUser() {
       try {
         const response = await axios.get(
           `http://localhost:4000/users/user/${idUser}`
@@ -23,7 +23,7 @@ function UserProfile() {
       }
     }
 
-    fetchConfigs();
+    fetchUser();
   }, [idUser, reload]);
 
   return (
@@ -33,7 +33,7 @@ function UserProfile() {
       {!loading && (
         <>
           <div className="mt-3 d-flex flex-column gap-3">
-            <div class="mb-2">
+            <div className="mb-2">
               <label className="form-label" htmlFor="name">
                 Nome
               </label>
@@ -46,7 +46,7 @@ function UserProfile() {
                 disabled
               />
             </div>
-            <div class="mb-4">
+            <div className="mb-4">
               <label className="form-label" htmlFor="email">
                 E-mail
               </label>
@@ -67,7 +67,7 @@ function UserProfile() {
           EDITAR
         </Link>
         <Link to="/users">
-          <button type="button" class="btn btn-primary">
+          <button type="button" className="btn btn-primary">
             VOLTAR
           </button>
         </Link>
