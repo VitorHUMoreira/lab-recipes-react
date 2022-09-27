@@ -1,20 +1,16 @@
-import axios from "axios";
+import { api } from "../../api/api";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UserProfile() {
-  const { idUser } = useParams();
   const [user, setUser] = useState({});
-  const [reload] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     async function fetchUser() {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/users/user/${idUser}`
-        );
+        const response = await api.get(`/users/profile`);
         setUser(response.data);
         setLoading(false);
       } catch (error) {
@@ -24,7 +20,7 @@ function UserProfile() {
     }
 
     fetchUser();
-  }, [idUser, reload]);
+  }, []);
 
   return (
     <div className="container-xl main-container bg-secondary border border-dark rounded p-3">

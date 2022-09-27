@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../api/api";
 
-function UserForm() {
+function SignUpForm() {
   const startRef = useRef();
   const navigate = useNavigate();
 
@@ -14,6 +14,7 @@ function UserForm() {
   const [userForm, setUserForm] = useState({
     name: "",
     email: "",
+    password: "",
   });
 
   function handleChange(e) {
@@ -24,12 +25,12 @@ function UserForm() {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:4000/users/create", userForm);
-      toast.success("Usuário criado com sucesso.");
-      navigate("/users");
+      await api.post("/users/sign-up", userForm);
+      toast.success("Conta criada com sucesso.");
+      navigate("/login");
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao criar usuário.");
+      toast.error("Erro ao criar conta.");
     }
   }
 
@@ -51,7 +52,8 @@ function UserForm() {
             onChange={handleChange}
           />
         </div>
-        <div className="mb-4">
+
+        <div className="mb-2">
           <label className="form-label" htmlFor="email">
             E-mail
           </label>
@@ -66,12 +68,27 @@ function UserForm() {
           />
         </div>
 
+        <div className="mb-4">
+          <label className="form-label" htmlFor="password">
+            Senha
+          </label>
+          <input
+            className="form-control"
+            type="password"
+            id="password"
+            value={userForm.password}
+            name="password"
+            required
+            onChange={handleChange}
+          />
+        </div>
+
         <button type="submit" className="btn btn-primary">
-          CRIAR USUÁRIO
+          CRIAR CONTA
         </button>
       </form>
     </>
   );
 }
 
-export default UserForm;
+export default SignUpForm;
