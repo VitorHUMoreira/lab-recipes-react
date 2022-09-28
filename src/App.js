@@ -14,6 +14,7 @@ import RecipeEdit from "./Pages/RecipeEdit";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import { AuthContextComponent } from "./contexts/authContext";
+import ProtectRout from "./components/ProtectRoute";
 
 function App() {
   return (
@@ -25,7 +26,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route
+            path="/profile"
+            element={<ProtectRout Component={UserProfile} />}
+          />
           <Route path="/profile-edit" element={<UserEdit />} />
 
           <Route path="/users" element={<Users />} />
