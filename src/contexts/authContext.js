@@ -10,7 +10,7 @@ function AuthContextComponent(props) {
 
   useEffect(() => {
     const loggedInUserJSON = localStorage.getItem("loggedInUser");
-    const parseLoggedInUser = JSON.parse(loggedInUserJSON);
+    const parseLoggedInUser = JSON.parse(loggedInUserJSON || '""');
 
     if (parseLoggedInUser.token) {
       setLoggedInUser(parseLoggedInUser);

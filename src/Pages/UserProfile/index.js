@@ -1,10 +1,12 @@
 import { api } from "../../api/api";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function UserProfile() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -22,6 +24,12 @@ function UserProfile() {
     fetchUser();
   }, []);
 
+  function handleLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
+  }
+
   return (
     <div className="container-xl main-container bg-secondary border border-dark rounded p-3">
       <h2>{user.name}</h2>
@@ -29,6 +37,17 @@ function UserProfile() {
       {!loading && (
         <>
           <div className="mt-3 d-flex flex-column gap-3">
+            <div className="mb-2">
+              <label className="form-label" htmlFor="picture">
+                Foto
+              </label>
+              <img
+                src={user.picture}
+                alt="User profile"
+                className="form-control"
+                id="picture"
+              />
+            </div>
             <div className="mb-2">
               <label className="form-label" htmlFor="name">
                 Nome
@@ -67,6 +86,9 @@ function UserProfile() {
             VOLTAR
           </button>
         </Link>
+        <button type="button" onClick={handleLogout} className="btn btn-danger">
+          SAIR
+        </button>
       </div>
     </div>
   );

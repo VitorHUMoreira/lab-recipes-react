@@ -16,16 +16,34 @@ function SignUpForm() {
     email: "",
     password: "",
   });
+  const [profilePicture, setProfilePicture] = useState("");
 
   function handleChange(e) {
     setUserForm({ ...userForm, [e.target.name]: e.target.value });
+  }
+
+  function handleImage(e) {
+    setProfilePicture(e.target.files[0]);
+  }
+
+  async function handleUpload() {
+    try {
+      const uploadData = new FormData();
+      uploadData.append("picture", profilePicture);
+      const response = await api.post("/upload-image", uploadData);
+      return response.data.url;
+    } catch (error) {
+      console.log(error);
+      toast.error("Erro no upload da imagem.");
+    }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      await api.post("/users/sign-up", userForm);
+      const imgURL = await handleUpload();
+      await api.post("/users/sign-up", { ...userForm, picture: imgURL });
       toast.success("Conta criada com sucesso.");
       navigate("/login");
     } catch (error) {
@@ -37,6 +55,19 @@ function SignUpForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
+        <div className="mb-2">
+          <label className="form-label" htmlFor="profilePicture">
+            Foto
+          </label>
+          <input
+            className="form-control"
+            id="profilePicture"
+            type="file"
+            name="profilePicture"
+            onChange={handleImage}
+          />
+        </div>
+
         <div className="mb-2">
           <label className="form-label" htmlFor="name">
             Nome
