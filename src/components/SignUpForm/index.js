@@ -2,10 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
+import profilePlaceholder from "../../assets/profile-placeholder.png";
 
 function SignUpForm() {
   const startRef = useRef();
+  const passwordInput = useRef();
+  const createButton = useRef();
   const navigate = useNavigate();
+  const [preview, setPreview] = useState();
 
   useEffect(() => {
     startRef.current.focus();
@@ -34,12 +38,12 @@ function SignUpForm() {
       return response.data.url;
     } catch (error) {
       console.log(error);
-      toast.error("Erro no upload da imagem.");
     }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+    createButton.current.disabled = true;
 
     try {
       const imgURL = await handleUpload();
@@ -47,8 +51,27 @@ function SignUpForm() {
       toast.success("Conta criada com sucesso.");
       navigate("/login");
     } catch (error) {
+      createButton.current.disabled = false;
       console.log(error);
       toast.error("Erro ao criar conta.");
+    }
+  }
+
+  useEffect(() => {
+    if (!profilePicture) {
+      setPreview(profilePlaceholder);
+      return;
+    }
+    const objectURL = URL.createObjectURL(profilePicture);
+    setPreview(objectURL);
+    return () => URL.revokeObjectURL(objectURL);
+  }, [profilePicture]);
+
+  function showPassword() {
+    if (passwordInput.current.type === "password") {
+      passwordInput.current.type = "text";
+    } else {
+      passwordInput.current.type = "password";
     }
   }
 
@@ -56,7 +79,10 @@ function SignUpForm() {
     <>
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
-          <label className="form-label" htmlFor="profilePicture">
+          <img src={preview} alt="" className="profile-img" />
+        </div>
+        <div className="mb-2">
+          <label className="form-label fw-bold" htmlFor="profilePicture">
             Foto
           </label>
           <input
@@ -69,7 +95,7 @@ function SignUpForm() {
         </div>
 
         <div className="mb-2">
-          <label className="form-label" htmlFor="name">
+          <label className="form-label fw-bold" htmlFor="name">
             Nome
           </label>
           <input
@@ -85,7 +111,7 @@ function SignUpForm() {
         </div>
 
         <div className="mb-2">
-          <label className="form-label" htmlFor="email">
+          <label className="form-label fw-bold" htmlFor="email">
             E-mail
           </label>
           <input
@@ -100,10 +126,11 @@ function SignUpForm() {
         </div>
 
         <div className="mb-4">
-          <label className="form-label" htmlFor="password">
+          <label className="form-label fw-bold" htmlFor="password">
             Senha
           </label>
           <input
+            ref={passwordInput}
             className="form-control"
             type="password"
             id="password"
@@ -112,9 +139,11 @@ function SignUpForm() {
             required
             onChange={handleChange}
           />
+          <input type="checkbox" onClick={showPassword} />
+          Show Password
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button ref={createButton} type="submit" className="btn btn-primary">
           CRIAR CONTA
         </button>
       </form>

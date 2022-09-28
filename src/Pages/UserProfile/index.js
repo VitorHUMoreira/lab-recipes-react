@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 function UserProfile() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,13 +37,10 @@ function UserProfile() {
         <>
           <div className="mt-3 d-flex flex-column gap-3">
             <div className="mb-2">
-              <label className="form-label" htmlFor="picture">
-                Foto
-              </label>
               <img
                 src={user.picture}
                 alt="User profile"
-                className="form-control"
+                className="profile-img"
                 id="picture"
               />
             </div>
@@ -78,7 +74,7 @@ function UserProfile() {
         </>
       )}
       <div className="d-flex gap-2">
-        <Link to={`/users/edit/${user._id}`} className="btn btn-warning">
+        <Link to={`/profile-edit`} className="btn btn-warning">
           EDITAR
         </Link>
         <Link to="/users">

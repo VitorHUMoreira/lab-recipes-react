@@ -11,3 +11,11 @@
   flex-direction: column;
   text-align: center;
 }
+
+.profile-img {
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid darkgrey;
+}

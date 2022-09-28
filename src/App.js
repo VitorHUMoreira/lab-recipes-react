@@ -26,10 +26,10 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile-edit" element={<UserEdit />} />
 
           <Route path="/users" element={<Users />} />
           <Route path="/users/user/:idUser" element={<UserProfile />} />
-          <Route path="/users/edit/:idUser" element={<UserEdit />} />
 
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/create" element={<RecipeCreate />} />
