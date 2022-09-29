@@ -49,7 +49,7 @@ function SignUpForm() {
       const imgURL = await handleUpload();
       await api.post("/users/sign-up", { ...userForm, picture: imgURL });
       toast.success("Conta criada com sucesso.");
-      navigate("/login");
+      navigate("/confirm-email");
     } catch (error) {
       createButton.current.disabled = false;
       console.log(error);

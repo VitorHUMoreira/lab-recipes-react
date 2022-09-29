@@ -4,7 +4,7 @@ function Home() {
   return (
     <div className="container-xxl main-container">
       <div className="container-sm bg-secondary border border-dark rounded p-3">
-        <h2>HOME</h2>
+        <h2>BEM VINDO AO LAB REPICES</h2>
         <hr className="bg-dark" />
         <div className="d-flex align-items-center justify-content-center gap-2">
           <Link to="/sign-up">

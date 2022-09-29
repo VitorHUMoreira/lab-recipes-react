@@ -77,11 +77,6 @@ function UserProfile() {
         <Link to={`/profile-edit`} className="btn btn-warning">
           EDITAR
         </Link>
-        <Link to="/users">
-          <button type="button" className="btn btn-primary">
-            VOLTAR
-          </button>
-        </Link>
         <button type="button" onClick={handleLogout} className="btn btn-danger">
           SAIR
         </button>

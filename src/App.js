@@ -14,7 +14,10 @@ import RecipeEdit from "./Pages/RecipeEdit";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import { AuthContextComponent } from "./contexts/authContext";
-import ProtectRout from "./components/ProtectRoute";
+import { OnlyLogged } from "./components/ProtectRoute";
+import { OnlyAdmin } from "./components/ProtectRoute";
+import ActivateAccount from "./Pages/ActivateAccount";
+import ConfirmEmail from "./Pages/ConfirmEmail";
 
 function App() {
   return (
@@ -25,21 +28,30 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/confirm-email" element={<ConfirmEmail />} />
+          <Route
+            path="/activate-account/:idUser"
+            element={<ActivateAccount />}
+          />
           <Route path="/login" element={<Login />} />
           <Route
             path="/profile"
-            element={<ProtectRout Component={UserProfile} />}
+            element={<OnlyLogged Component={UserProfile} />}
           />
           <Route path="/profile-edit" element={<UserEdit />} />
 
           <Route path="/users" element={<Users />} />
-          <Route path="/users/user/:idUser" element={<UserProfile />} />
-
           <Route path="/recipes" element={<Recipes />} />
-          <Route path="/recipes/create" element={<RecipeCreate />} />
-          <Route path="/recipes/recipe/:idRecipe" element={<RecipeDetail />} />
-          <Route path="/recipes/edit/:idRecipe" element={<RecipeEdit />} />
+          <Route
+            path="/create-recipes"
+            element={<OnlyAdmin Component={RecipeCreate} />}
+          />
+          <Route path="/recipes/:idRecipe" element={<RecipeDetail />} />
+
           <Route path="*" element={<Error />} />
+
+          <Route path="/users/user/:idUser" element={<UserProfile />} />
+          <Route path="/recipes/edit/:idRecipe" element={<RecipeEdit />} />
         </Routes>
       </AuthContextComponent>
     </>

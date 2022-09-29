@@ -1,9 +1,12 @@
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import RecipeCard from "../../components/RecipeCard";
+import { api } from "../../api/api";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/authContext";
 
 function Recipes() {
+  const { loggedInUser } = useContext(AuthContext);
   const startRef = useRef();
 
   useEffect(() => {
@@ -18,7 +21,7 @@ function Recipes() {
     setLoading(true);
     async function fetchRecipes() {
       try {
-        const response = await axios.get("http://localhost:4000/recipes/all");
+        const response = await api.get("/recipes/all");
         setRecipes(response.data);
         setLoading(false);
       } catch (error) {
@@ -37,11 +40,13 @@ function Recipes() {
   return (
     <div className="container-xl main-container bg-secondary border border-dark rounded p-3">
       <h2>RECEITAS</h2>
-      <Link to="/recipes/create">
-        <button type="button" className="btn btn-primary btn-lg">
-          CRIAR RECEITA
-        </button>
-      </Link>
+      {loggedInUser.user.role === "ADMIN" && (
+        <Link to="/create-recipes">
+          <button type="button" className="btn btn-primary btn-lg">
+            CRIAR RECEITA
+          </button>
+        </Link>
+      )}
       <input
         ref={startRef}
         className="form-control p-2 mt-4"

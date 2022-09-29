@@ -1,7 +1,6 @@
-import axios from "axios";
-import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import UserCard from "../../components/UserCard";
+import { api } from "../../api/api";
 
 function Users() {
   const startRef = useRef();
@@ -18,7 +17,7 @@ function Users() {
     setLoading(true);
     async function fetchUsers() {
       try {
-        const response = await axios.get("http://localhost:4000/users/all");
+        const response = await api.get("/users/all");
         setUsers(response.data);
         setLoading(false);
       } catch (error) {
@@ -37,11 +36,6 @@ function Users() {
   return (
     <div className="container-xl main-container bg-secondary border border-dark rounded p-3">
       <h2>USUÁRIOS</h2>
-      <Link to="/users/create">
-        <button type="button" className="btn btn-primary btn-lg">
-          CRIAR USUÁRIO
-        </button>
-      </Link>
       <input
         ref={startRef}
         className="form-control p-2 mt-4"
